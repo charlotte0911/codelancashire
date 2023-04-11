@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="index.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title class="title" id="title">Charlotte's Website!</title>
+  </head>
+
+  <body class="bg-red-400">
+    <div id="bio">
+      <h1 class="text-white">Charlotte's Website!</h1>
+      <h2 class="text-white" id="biotitle">Bio</h2>
+      <p class="text-white">
+        I am 22 years old and I was born in Blackburn. I have 2 dogs called
+        Bella and Dennis and one of my favourite things to do is go on walks
+        with them to relax and recharge after the day of work.
+      </p>
+      <p class="text-white">
+        Another one of my favourite things to do is play the guitar, it is a
+        commitment to practise but I find it's very rewarding to be able to play
+        songs that I've wanted to learn. I also play in a pipe band, click
+        <a href="band.jpg">here</a> for a picture!
+      </p>
+    </div>
+    <div id="education">
+      <h2 class="text-white" id="edtitle">Education</h2>
+      <p class="text-white">
+        After completing GCSEs and A-Levels in Biology, Chemistry, and Physics,
+        I went on to do a chemistry degree at the University of Huddersfield, it
+        was a lot of fun to do the practicals and gave me experience in a lot of
+        different fields of chemistry. Since then, I have been a science
+        technician at a school to help with practicals.
+      </p>
+    </div>
+
+    <div id="skills">
+      <h2 class="text-white" id="titles">Skills</h2>
+      <p class="text-white">
+        One of the best skillsets apart from chemistry and music I have is the
+        ability to speak another language! I speak Italian and Spanish, but I
+        think I speak better Italian than Spanish because I speak it more often.
+      </p>
+    </div>
+
+    <div id="timeline">
+      <h1>Timeline of Education and Career</h1>
+
+      <iframe
+        src="https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1xt9mWjLXfqsqz1KO_V5FfLLrkLnjWjlcKE_kuXjyCOg&font=Default&lang=en&initial_zoom=2&height=650"
+        width="100%"
+        height="650"
+        webkitallowfullscreen
+        mozallowfullscreen
+        allowfullscreen
+        frameborder="0"
+      ></iframe>
+    </div>
+    <h1>Questions Form</h1>
+    <form id="contact-form" class="w-1/2 mx-auto mt-10 space-y-6" method="POST">
+      <div class="flex flex-col space-y-4">
+        <label id="firstnamelabel" for="lastname" class="text-gray-300">
+          First Name
+        </label>
+        <input
+          class="input"
+          id="firstname"
+          value="Charlotte"
+          type="text"
+          name="firstname"
+        />
+      
+
+      <div class="flex flex-col space-y-4">
+        <label id="lastnamelabel" for="lastname" class="text-gray-300">
+          Last Name
+        </label>
+        <input
+          class="input"
+          id="lastname"
+          value="Quirk"
+          type="text"
+          name="lastname"
+        />
+      </div>
+
+      <div class="flex flex-col space-y-4">
+        <label id="emaillabel" for="email" class="text-gray-300"> Email </label>
+        <input class="input" id="email" type="email" name="email" />
+      </div>
+
+      <div class="flex flex-col space-y-4">
+        <label for="question" class="text-gray-300"> Question </label>
+        <textarea
+          class="input"
+          rows="5"
+          id="questionInput"
+          placeholder="Enter your question"
+          name="question"
+        ></textarea>
+        <!-- <textarea  id="message" class="input"
+          rows="5"
+          placeholder="Enter your message"
+          name="message"></textarea> -->
+      </div>
+
+      <div>
+        <button
+          class="bg-blue-400 px-8 py-2 text-gray-50 rounded-md font-semibold"
+        >
+          Send
+        </button>
+      </div>
+    </form>
+
+    <div class="image id="image">
+    <img
+      class="image"
+      src="graduation.jpg"
+      alt="A picture of me with friends and tutors at my graduation"
+
+    /></div>
+  </body>
+</html>
