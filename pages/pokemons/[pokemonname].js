@@ -1,25 +1,43 @@
 import React from 'react'
 import Image from "next/image"
 import {useRouter} from "next/router"
+import Return from '@/components/Return'
 
 export default function PokemonPage({details}) {
   const router = useRouter()
   return (
-    <div>
-        <h1 className="flex items-center justify-center text-3xl font-semibold">Pokemon - {details.name}  </h1>
+    
+    <div className="bg-purple-200 min-h-screen">
 
-        <div className="flex items-center justify-center relative">
-          <Image src={details.imageURL} width={200} height={200} />
+
+
+     
+      <div className='bg-purple-200'>
+      
+        <h1 className="bg-purple-300 flex items-center justify-center text-3xl font-semibold">
+        {details.name} </h1> 
+
+        <Return>
+  {Return} Home 
+</Return> 
+        
+
+         <span className="flex items-center justify-center"> <Image src={details.imageURL} width={200} height={200} /></span>
         </div>
 
-        <div className="flex items-center justify-center flex-col space-y-4">
+        <div className="bg-purple-120 flex items-center justify-center flex-col space-y-4">
           <p>Height: {details.stats.height_m}</p>
           <p>Weight: {details.stats.weight_kg}</p>
           <p>Attack: {details.stats.attack}</p>
         </div>
     </div>
+    
+
   )
 }
+
+
+
 
 export async function getServerSideProps(context){
   // console.log("context", context.params)

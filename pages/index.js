@@ -1,35 +1,20 @@
-import React from "react"
-import Head from "next/head"
-// import pokemons from "@/assets/sampledataset.json"
-import PokemonList from "@/components/PokemonList"
-import Title from "@/components/Title"
+import Head from 'next/head'
+import Image from 'next/image'
+import { Inter } from 'next/font/google'
+import ContactForm from '@/components/ContactForm'
 
-export default function Pokemons({pokemonsList}) {
+
+const inter = Inter({ subsets: ['latin'] })
+
+export default function Home(){
   return (
     <>
-      <Head>
-        <title>Pokemons</title>
-      </Head>
-
-      <Title>
-        <span className="flex items-center justify-center">List of pokemons</span>
-      </Title>
-      <PokemonList className="flex items-center justify-center" pokemons={pokemonsList} />
-      
+    <Head>
+      <title>Code Lancashire</title>
+    </Head>
+    <div className="max-w-4xl mx-auto p-5">
+      <ContactForm />
+    </div>
     </>
   )
 }
-
-export async function getServerSideProps(context) {
-  // console.log("pokemon", pokemons)
-  const response = await fetch("http://127.0.0.1:8000/pokemon")
-  const data = await response.json()
-
-
-  console.log("pokemons", data)
-
-  return {
-    props: {
-      pokemonsList: data,
-    }}
-  }

@@ -1,17 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import pokemons from "@/assets/sampledataset.json";
+import { useRouter } from "next/router";
 
 function PokemonListItem({ pokemon, test }) {
   return (
     <Link href={`/pokemons/${pokemon.name}`}>
       <li
-        className={`flex items-center justify-center border border-gray-400 p-5 space-x-4 border-radius 10px ${ColorMap(
+        className={`rounded-sm flex items-center justify-center border border-black p-5 space-x-4 border-radius 10px ${ColorMap(
           pokemon.type1
         )}`}
       >
-        {/* dot */}
         <span className="flex items-center justify-center text-white text-xl border-radius 50px">
           {test}. {pokemon.name}
         </span>
@@ -23,15 +23,15 @@ function PokemonListItem({ pokemon, test }) {
 function ColorMap(pokemonType) {
   switch (pokemonType) {
     case "grass":
-      return "bg-green-600";
+      return "bg-green-500";
     case "poison":
-      return "bg-yellow-600";
+      return "bg-yellow-500";
     case "water":
-      return "bg-blue-600";
+      return "bg-blue-500";
     case "bug":
-      return "bg-red-600";
+      return "bg-red-500";
     default:
-      return "bg-gray-600";
+      return "bg-gray-500";
   }
 }
 
