@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 export default function Pagination({
   itemsPerPage,
   totalItems,
@@ -22,7 +20,7 @@ export default function Pagination({
   }
 
   return (
-    <nav className="flex justify-center mt-2 xl:w-[1250px] lg:w-[1010px] md:w-[760px] sm:w[620px]">
+    <nav className="flex justify-center mt-2 xl:w-[1250px] lg:w-[1010px] md:w-[760px] sm:[620px] ">
       <ul className="flex m-1 p-1">
         <li>
           <button
@@ -33,8 +31,8 @@ export default function Pagination({
             Previous
           </button>
         </li>
-        <li className="p-1 px-3 m-1 bg-gray-200 text-gray-700  hover:bg-gray-400 hover:text-gray-900 rounded">
-          {currentPage / { pageNumbers, length }}
+        <li className="p-1 px-3 m-1 bg-gray-200 text-gray-700 hover:bg-gray-400 hover:text-gray-900 rounded">
+          {currentPage} / {pageNumbers.length}
         </li>
         <li>
           <button

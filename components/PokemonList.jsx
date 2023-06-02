@@ -1,78 +1,254 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
+import React from "react";
 import Link from "next/link";
-import Image from "next/image";
-import pokemons from "@/assets/sampledataset.json";
-import { useRouter } from "next/router";
 import Pagination from "./Pagination";
 
-function PokemonListItem({ pokemon, test }) {
+const colorMap = {
+  fire: "bg-red-300",
+  water: "bg-blue-300",
+  grass: "bg-green-300",
+  normal: "bg-gray-300",
+  bug: "bg-green-300",
+  poison: "bg-purple-300",
+  electric: "bg-yellow-300",
+  ground: "bg-yellow-300",
+  fairy: "bg-purple-300",
+  fighting: "bg-red-300",
+  psychic: "bg-orange-300",
+  rock: "bg-gray-300",
+  ghost: "bg-purple-300",
+  ice: "bg-blue-300",
+  dragon: "bg-blue-300",
+  dark: "bg-gray-300",
+  steel: "bg-gray-300",
+  flying: "bg-blue-300",
+};
+
+function PokemonListItem({ pokemon }) {
   return (
-    <Link href={`/pokemons/${pokemon.name}`}>
-      <li
-        className={`rounded-sm flex items-center justify-center border border-black p-5 space-x-4 border-radius 10px ${ColorMap(
-          pokemon.type1
-        )}`}
-      >
-        <span className="flex items-center justify-center text-white text-xl border-radius 50px">
-          {test}. {pokemon.name}
-        </span>
-      </li>
-    </Link>
+    <div className="grid items-end bg-purple-500  m-2  my-5 w-[210px] h-[200px]">
+      <Link href={`/pokemons/${pokemon.name}`}>
+        <div className="text-black text-xl bg-purple-200  text-center p-1">
+          {pokemon.name}
+        </div>
+        <div className={`h-[120px] m-3 ${colorMap[pokemon.type1]}`}>
+          <div className="text-black text-sm">
+            {" "}
+            Class: {pokemon.classification}
+          </div>
+          <div className="text-black"> Generation: {pokemon.generation}</div>
+          <div className="text-black mt-8">
+            {" "}
+            {pokemon.is_legendary ? "Legendary Pokemon" : ""}
+          </div>
+        </div>
+        <div className="h-[24px] bg-purple-200">
+          <span
+            className={`text-black grid place-items-center rounded-b-lg ${
+              colorMap[pokemon.type1]
+            }`}
+          >
+            {/* <span>
+              {pokemon.type1.toUpperCase()} {pokemon.type2 != "" ? "/" : ""}{" "}
+              {pokemon.type2.toUpperCase()}
+            </span> */}
+          </span>
+        </div>
+      </Link>
+    </div>
   );
 }
 
-function ColorMap(pokemonType) {
-  switch (pokemonType) {
-    case "grass":
-      return "bg-green-500";
-    case "poison":
-      return "bg-yellow-500";
-    case "water":
-      return "bg-blue-500";
-    case "bug":
-      return "bg-red-500";
-    default:
-      return "bg-gray-500";
-  }
-}
-
-export function PokemonList({ pokemons }) {
+export default function PokemonList({ pokemons }) {
   const [currentPage, setCurrentPage] = useState(1);
-  const ItemsPerPage = 20;
+  const [filteredPokemons, setFilteredPokemons] = useState(pokemons);
+  const itemsPerPage = 20;
 
-  return (
-    <ul>
-      {pokemons.length > 0 ? (
-        pokemons.map((pokemon, index) => (
-          <PokemonListItem test={index} key={index} pokemon={pokemon} />
-        ))
-      ) : (
-        <h1 className="text-3xl text-gray-600"> No pokemons in database </h1>
-      )}
-    </ul>
-  );
-}
-
-export async function getServerSideProps(context) {
-  // console.log("context", context.params)
-  const pokemonName = context.params.pokemonname;
-  const response = await fetch(`http://127.0.0.1:8000/pokemon/${pokemonName}`);
-  let data = await response.json();
-  const externalUrl = ` https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`;
-
-  const externalDataResponse = await fetch(externalUrl);
-  const externalData = await externalDataResponse.json();
-
-  const imageURL = externalData.sprites.front_shiny;
-
-  console.log("before", data);
-
-  data = { ...data, imageURL };
-  console.log("data of single of pokemon", data);
-
-  return {
-    props: {
-      details: data,
-    },
+  const filterType = (type) => {
+    const filtered = type
+      ? pokemons.filter((item) => item.type1 === type || item.type2 === type)
+      : pokemons;
+    setFilteredPokemons(filtered);
+    setCurrentPage(1); // reset to first page when filter changes
   };
+
+  const filterLegendary = () => {
+    const filtered = pokemons.filter((item) => item.is_legendary);
+    setFilteredPokemons(filtered);
+    setCurrentPage(1); // reset to first page when filter changes
+  };
+
+  const filterSearch = (searchValue) => {
+    const filtered = searchValue
+      ? pokemons.filter((item) =>
+          item.name.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      : pokemons;
+    setFilteredPokemons(filtered);
+    setCurrentPage(1); // reset to first page when filter changes
+  };
+
+  function clearInput() {
+    document.getElementById("searchInput").value = "";
+    filterType("");
+  }
+
+  // Calculate the index of the first and last item to display on the current page
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredPokemons.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+  return (
+    <div className="flex justify-center flex-col items-center">
+      <div className="grid grid-cols-3 grid-rows-2 mb-2">
+        <input
+          id="searchInput"
+          className="p-2 w-36 h-8 m-2 text-black bg-purple-200"
+          type="text"
+          onChange={(e) => filterSearch(e.target.value)}
+        ></input>
+        <button
+          onClick={() => clearInput()}
+          className="w-24 m-2  text-black bg-purple-300"
+        >
+          Clear
+        </button>
+        <button
+          onClick={() => filterType("")}
+          className="w-24 m-2  text-gray-800 bg-gray-300"
+        >
+          All
+        </button>
+      </div>
+      <div className="grid grid-cols-3 lg:grid-cols-9 md:grid-cols-6 grid-rows-6 lg:grid-rows-2 md:grid-rows-3">
+        <button
+          onClick={() => filterType("fire")}
+          className={`w-16 m-2   text-black  ${colorMap["fire"]}`}
+        >
+          Fire
+        </button>
+        <button
+          onClick={() => filterType("water")}
+          className={`w-16 m-2  text-black  ${colorMap["water"]}`}
+        >
+          Water
+        </button>
+        <button
+          onClick={() => filterType("grass")}
+          className={`w-16 m-2  text-black  ${colorMap["grass"]}`}
+        >
+          Grass
+        </button>
+        <button
+          onClick={() => filterType("normal")}
+          className={`w-16 m-2  text-black  ${colorMap["normal"]}`}
+        >
+          Normal
+        </button>
+        <button
+          onClick={() => filterType("bug")}
+          className={`w-16 m-2  text-black   ${colorMap["bug"]}`}
+        >
+          Bug
+        </button>
+        <button
+          onClick={() => filterType("poison")}
+          className={`w-16 m-2  text-black  ${colorMap["poison"]}`}
+        >
+          Poison
+        </button>
+        <button
+          onClick={() => filterType("electric")}
+          className={`w-16 m-2  text-black   ${colorMap["electric"]}`}
+        >
+          Electric
+        </button>
+        <button
+          onClick={() => filterType("ground")}
+          className={`w-16 m-2  text-black  ${colorMap["ground"]}`}
+        >
+          Ground
+        </button>
+        <button
+          onClick={() => filterType("fairy")}
+          className={`w-16 m-2  text-black  ${colorMap["fairy"]}`}
+        >
+          Fairy
+        </button>
+        <button
+          onClick={() => filterType("fighting")}
+          className={`w-16 m-2  text-black ${colorMap["fighting"]}`}
+        >
+          Fighting
+        </button>
+        <button
+          onClick={() => filterType("psychic")}
+          className={`w-16 m-2  text-black  ${colorMap["psychic"]}`}
+        >
+          Psychic
+        </button>
+        <button
+          onClick={() => filterType("rock")}
+          className={`w-16 m-2   text-black  ${colorMap["rock"]}`}
+        >
+          Rock
+        </button>
+        <button
+          onClick={() => filterType("ghost")}
+          className={`w-16 m-2   text-black  ${colorMap["ghost"]}`}
+        >
+          Ghost
+        </button>
+        <button
+          onClick={() => filterType("ice")}
+          className={`w-16 m-2  text-black ${colorMap["ice"]}`}
+        >
+          Ice
+        </button>
+        <button
+          onClick={() => filterType("dragon")}
+          className={`w-16 m-2   text-black ${colorMap["dragon"]}`}
+        >
+          Dragon
+        </button>
+        <button
+          onClick={() => filterType("dark")}
+          className={`w-16 m-2  text-black ${colorMap["dark"]}`}
+        >
+          Dark
+        </button>
+        <button
+          onClick={() => filterType("steel")}
+          className={`w-16 m-2   text-black  ${colorMap["steel"]}`}
+        >
+          Steel
+        </button>
+        <button
+          onClick={() => filterType("flying")}
+          className={`w-16 m-2  text-black ${colorMap["flying"]}`}
+        >
+          Flying
+        </button>
+      </div>
+      <div className="grid justify-items-center xl:w-[1250px] lg:w-[1010px] md:w-[760px] sm:[620px] content-center bg-amber-300  xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-2 grid-cols-1 p-3 m-2">
+        {currentItems.length > 0 ? (
+          currentItems.map((pokemon, index) => (
+            <PokemonListItem pokemon={pokemon} key={index} />
+          ))
+        ) : (
+          <h1 className="text-3xl text-black"> Nothing Found </h1>
+        )}
+      </div>
+      <div className="flex">
+        <Pagination
+          itemsPerPage={itemsPerPage}
+          totalItems={filteredPokemons.length}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+      </div>
+    </div>
+  );
 }
