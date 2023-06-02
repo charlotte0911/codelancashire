@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import pokemons from "@/assets/sampledataset.json";
 import { useRouter } from "next/router";
+import Pagination from "./Pagination";
 
 function PokemonListItem({ pokemon, test }) {
   return (
@@ -36,6 +37,9 @@ function ColorMap(pokemonType) {
 }
 
 export function PokemonList({ pokemons }) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const ItemsPerPage = 20;
+
   return (
     <ul>
       {pokemons.length > 0 ? (
