@@ -32,11 +32,6 @@ function PokemonListItem({ pokemon }) {
           {pokemon.name}
         </div>
         <div className={`h-[120px] m-3 ${colorMap[pokemon.type1]}`}>
-          <div className="text-black text-sm">
-            {" "}
-            Class: {pokemon.classification}
-          </div>
-          <div className="text-black"> Generation: {pokemon.generation}</div>
           <div className="text-black mt-8">
             {" "}
             {pokemon.is_legendary ? "Legendary Pokemon" : ""}
@@ -47,12 +42,7 @@ function PokemonListItem({ pokemon }) {
             className={`text-black grid place-items-center rounded-b-lg ${
               colorMap[pokemon.type1]
             }`}
-          >
-            {/* <span>
-              {pokemon.type1.toUpperCase()} {pokemon.type2 != "" ? "/" : ""}{" "}
-              {pokemon.type2.toUpperCase()}
-            </span> */}
-          </span>
+          ></span>
         </div>
       </Link>
     </div>
@@ -69,13 +59,13 @@ export default function PokemonList({ pokemons }) {
       ? pokemons.filter((item) => item.type1 === type || item.type2 === type)
       : pokemons;
     setFilteredPokemons(filtered);
-    setCurrentPage(1); // reset to first page when filter changes
+    setCurrentPage(1);
   };
 
   const filterLegendary = () => {
     const filtered = pokemons.filter((item) => item.is_legendary);
     setFilteredPokemons(filtered);
-    setCurrentPage(1); // reset to first page when filter changes
+    setCurrentPage(1);
   };
 
   const filterSearch = (searchValue) => {
@@ -85,7 +75,7 @@ export default function PokemonList({ pokemons }) {
         )
       : pokemons;
     setFilteredPokemons(filtered);
-    setCurrentPage(1); // reset to first page when filter changes
+    setCurrentPage(1);
   };
 
   function clearInput() {
@@ -93,7 +83,6 @@ export default function PokemonList({ pokemons }) {
     filterType("");
   }
 
-  // Calculate the index of the first and last item to display on the current page
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredPokemons.slice(
@@ -101,10 +90,10 @@ export default function PokemonList({ pokemons }) {
     indexOfLastItem
   );
   return (
-    <div className="flex justify-center flex-col items-center">
-      <div className="grid grid-cols-3 grid-rows-2 mb-2">
+    <>
+      <div className="grid grid-cols-2 grid-rows-2 mb-1">
         <input
-          id="searchInput"
+          id="search"
           className="p-2 w-36 h-8 m-2 text-black bg-purple-200"
           type="text"
           onChange={(e) => filterSearch(e.target.value)}
@@ -117,119 +106,9 @@ export default function PokemonList({ pokemons }) {
         </button>
         <button
           onClick={() => filterType("")}
-          className="w-24 m-2  text-gray-800 bg-gray-300"
+          className="w-20 m-2 text-gray-800 bg-gray-300"
         >
           All
-        </button>
-      </div>
-      <div className="grid grid-cols-3 lg:grid-cols-9 md:grid-cols-6 grid-rows-6 lg:grid-rows-2 md:grid-rows-3">
-        <button
-          onClick={() => filterType("fire")}
-          className={`w-16 m-2   text-black  ${colorMap["fire"]}`}
-        >
-          Fire
-        </button>
-        <button
-          onClick={() => filterType("water")}
-          className={`w-16 m-2  text-black  ${colorMap["water"]}`}
-        >
-          Water
-        </button>
-        <button
-          onClick={() => filterType("grass")}
-          className={`w-16 m-2  text-black  ${colorMap["grass"]}`}
-        >
-          Grass
-        </button>
-        <button
-          onClick={() => filterType("normal")}
-          className={`w-16 m-2  text-black  ${colorMap["normal"]}`}
-        >
-          Normal
-        </button>
-        <button
-          onClick={() => filterType("bug")}
-          className={`w-16 m-2  text-black   ${colorMap["bug"]}`}
-        >
-          Bug
-        </button>
-        <button
-          onClick={() => filterType("poison")}
-          className={`w-16 m-2  text-black  ${colorMap["poison"]}`}
-        >
-          Poison
-        </button>
-        <button
-          onClick={() => filterType("electric")}
-          className={`w-16 m-2  text-black   ${colorMap["electric"]}`}
-        >
-          Electric
-        </button>
-        <button
-          onClick={() => filterType("ground")}
-          className={`w-16 m-2  text-black  ${colorMap["ground"]}`}
-        >
-          Ground
-        </button>
-        <button
-          onClick={() => filterType("fairy")}
-          className={`w-16 m-2  text-black  ${colorMap["fairy"]}`}
-        >
-          Fairy
-        </button>
-        <button
-          onClick={() => filterType("fighting")}
-          className={`w-16 m-2  text-black ${colorMap["fighting"]}`}
-        >
-          Fighting
-        </button>
-        <button
-          onClick={() => filterType("psychic")}
-          className={`w-16 m-2  text-black  ${colorMap["psychic"]}`}
-        >
-          Psychic
-        </button>
-        <button
-          onClick={() => filterType("rock")}
-          className={`w-16 m-2   text-black  ${colorMap["rock"]}`}
-        >
-          Rock
-        </button>
-        <button
-          onClick={() => filterType("ghost")}
-          className={`w-16 m-2   text-black  ${colorMap["ghost"]}`}
-        >
-          Ghost
-        </button>
-        <button
-          onClick={() => filterType("ice")}
-          className={`w-16 m-2  text-black ${colorMap["ice"]}`}
-        >
-          Ice
-        </button>
-        <button
-          onClick={() => filterType("dragon")}
-          className={`w-16 m-2   text-black ${colorMap["dragon"]}`}
-        >
-          Dragon
-        </button>
-        <button
-          onClick={() => filterType("dark")}
-          className={`w-16 m-2  text-black ${colorMap["dark"]}`}
-        >
-          Dark
-        </button>
-        <button
-          onClick={() => filterType("steel")}
-          className={`w-16 m-2   text-black  ${colorMap["steel"]}`}
-        >
-          Steel
-        </button>
-        <button
-          onClick={() => filterType("flying")}
-          className={`w-16 m-2  text-black ${colorMap["flying"]}`}
-        >
-          Flying
         </button>
       </div>
       <div className="grid justify-items-center xl:w-[1250px] lg:w-[1010px] md:w-[760px] sm:[620px] content-center bg-amber-300  xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-2 grid-cols-1 p-3 m-2">
@@ -238,7 +117,7 @@ export default function PokemonList({ pokemons }) {
             <PokemonListItem pokemon={pokemon} key={index} />
           ))
         ) : (
-          <h1 className="text-3xl text-black"> Nothing Found </h1>
+          <h1 className="text-xl text-black"> Nothing Found </h1>
         )}
       </div>
       <div className="flex">
@@ -249,6 +128,6 @@ export default function PokemonList({ pokemons }) {
           setCurrentPage={setCurrentPage}
         />
       </div>
-    </div>
+    </>
   );
 }
