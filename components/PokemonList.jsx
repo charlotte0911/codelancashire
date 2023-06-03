@@ -91,7 +91,7 @@ export default function PokemonList({ pokemons }) {
   );
   return (
     <>
-      <div className="grid grid-cols-2 grid-rows-2 mb-1">
+      <div className="flex items-center justify-left mb-1">
         <input
           id="search"
           className="p-2 w-36 h-8 m-2 text-black bg-purple-200"
