@@ -33,9 +33,7 @@ function PokemonListItem({ pokemon }) {
         </div>
         <div className={`h-[120px] m-3 ${colorMap[pokemon.type1]}`}>
           <div className="text-black mt-8">
-            {" "}
-            {pokemon.is_legendary ? "Legendary Pokemon" : ""}
-          </div>
+          
         </div>
         <div className="h-[24px] bg-purple-200">
           <span
